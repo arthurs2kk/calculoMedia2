@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Média Recuperação NSL</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 30px 40px;
+            border-radius: 15px;
+            max-width: 450px;
+            margin: auto;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #1e3c72;
+        }
+
+        input {
+            width: 100%;
+            margin-bottom: 12px;
+            padding: 10px;
+            font-size: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus {
+            border-color: #2a5298;
+            outline: none;
+            box-shadow: 0 0 6px rgba(42, 82, 152, 0.6);
+        }
+
+        button {
+            padding: 12px 18px;
+            font-size: 16px;
+            margin: 8px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button#calcular {
+            background: #1e90ff;
+            color: white;
+        }
+
+        button#zerar {
+            background: #f44336;
+            color: white;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 20px;
+            color: #2a5298;
+        }
+
+        a {
+            display: block;
+            margin-top: 12px;
+            text-decoration: none;
+            color: #1e90ff;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #163b6c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Cálculo da Média Recuperação 1° Ano</h2>
+
+        <input type="number" id="NR" placeholder="Nota Recuperação" step="0.1">
+        <input type="number" id="aql1" placeholder="AQL 1" step="0.1">
+        <input type="number" id="aql2" placeholder="AQL 2" step="0.1">
+        <input type="number" id="aql3" placeholder="AQL 3" step="0.1">
+        <input type="number" id="aql4" placeholder="AQL 4" step="0.1">
+
+        <button id="calcular">Calcular Média</button>
+        <button id="zerar">Zerar</button>
+
+        <div class="resultado" id="resultado"></div>
+
+        <a href="index.html">Calcular média</a>
+        <a href="MediaFinal.html">Calcular Média Final</a>
+    </div>
+
+    <script>
+        const calcularBtn = document.getElementById('calcular');
+        const zerarBtn = document.getElementById('zerar');
+        const resultadoDiv = document.getElementById('resultado');
+
+        calcularBtn.addEventListener('click', () => {
+            let notaRecu = Number(document.getElementById('NR').value);
+            let aql11 = Number(document.getElementById('aql1').value);
+            let aql22 = Number(document.getElementById('aql2').value);
+            let aql33 = Number(document.getElementById('aql3').value);
+            let aql44 = Number(document.getElementById('aql4').value);
+
+            if ([notaRecu, aql11, aql22, aql33, aql44].some(isNaN)) {
+                resultadoDiv.textContent = "Preencha todas as notas corretamente!";
+                return;
+            }
+
+            let resultado = notaRecu * 0.7 + ((aql11 + aql22 + aql33 + aql44) / 4) * 0.3;
+            resultadoDiv.textContent = `Sua média é: ${resultado.toFixed(1)}`;
+        });
+
+        zerarBtn.addEventListener('click', () => {
+            document.querySelectorAll('input').forEach(input => input.value = '');
+            resultadoDiv.textContent = '';
+        });
+    </script>
+</body>
+
+</html>
