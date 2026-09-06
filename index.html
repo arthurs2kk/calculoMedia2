@@ -4,103 +4,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Média Boletim NSL</title>
     <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --card-bg: rgba(17, 24, 39, 0.75);
+            --accent-blue: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
         body {
-            font-family: "Segoe UI", Arial, sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
             padding: 20px;
-            color: #333;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animação de Luz de Fundo */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
         }
 
         .container {
-            background: #ffffff;
-            padding: 30px 40px;
-            border-radius: 15px;
-            max-width: 450px;
-            margin: auto;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            animation: fadeIn 0.6s ease-in-out;
+            position: relative;
+            z-index: 1;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            padding: 40px 32px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: containerAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes containerAppear {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         h2 {
-            margin-bottom: 20px;
-            color: #1e3c72;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .full-width {
+            grid-column: span 2;
         }
 
         input {
             width: 100%;
-            margin-bottom: 12px;
-            padding: 10px;
-            font-size: 15px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            transition: border 0.3s, box-shadow 0.3s;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        input::placeholder {
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
 
         input:focus {
-            border-color: #2a5298;
-            outline: none;
-            box-shadow: 0 0 6px rgba(42, 82, 152, 0.6);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 15px var(--accent-glow);
+            transform: translateY(-1px);
+        }
+
+        .buttons-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
         }
 
         button {
-            padding: 12px 18px;
-            font-size: 16px;
-            margin: 8px;
-            border-radius: 8px;
+            flex: 1;
+            padding: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 12px;
             border: none;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.25s ease;
         }
 
         button#calcular {
-            background: #1e90ff;
-            color: white;
+            background: var(--accent-blue);
+            color: #0b0f19;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        button#calcular:hover {
+            background: #7dd3fc;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(56, 189, 248, 0.4);
         }
 
         button#zerar {
-            background: #f44336;
-            color: white;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        button#zerar:hover {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border-color: rgba(239, 68, 68, 0.3);
+            transform: translateY(-2px);
         }
 
         .resultado {
-            margin-top: 20px;
-            font-weight: bold;
-            font-size: 20px;
-            color: #2a5298;
+            margin-top: 24px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px dashed var(--border-color);
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .links-group {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
         }
 
         a {
-            display: block;
-            margin-top: 12px;
+            color: var(--text-muted);
             text-decoration: none;
-            color: #1e90ff;
-            font-weight: bold;
-            transition: color 0.3s;
+            font-size: 0.85rem;
+            transition: color 0.2s ease;
         }
 
         a:hover {
-            color: #163b6c;
+            color: var(--accent-blue);
+        }
+
+        footer {
+            margin-top: 28px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        footer span {
+            color: var(--text-main);
+            font-weight: 600;
         }
     </style>
 </head>
@@ -109,60 +222,66 @@
     <div class="container">
         <h2>Cálculo da Média 1° Ano</h2>
 
-        <input type="number" id="NP" placeholder="Nota Parcial (AP2)" step="0.1">
-        <input type="number" id="NA" placeholder="Nota ACD (ACD)" step="0.1">
-        <input type="number" id="NC" placeholder="Nota Conclusiva (AC)" step="0.1">
-        <input type="number" id="NS" placeholder="Nota Simulado (SIM)" step="0.1">
-        <input type="number" id="aql1" placeholder="AQL 1" step="0.1">
-        <input type="number" id="aql2" placeholder="AQL 2" step="0.1">
-        <input type="number" id="aql3" placeholder="AQL 3" step="0.1">
-        <input type="number" id="aql4" placeholder="AQL 4" step="0.1">
-        <input type="number" id="PEX" placeholder="PEX" step="0.1">
+        <div class="form-grid">
+            <input type="number" id="NP" placeholder="Nota Parcial (AP2)" step="0.1">
+            <input type="number" id="NA" placeholder="Nota ACD (ACD)" step="0.1">
+            <input type="number" id="NC" placeholder="Nota Conclusiva (AC)" step="0.1">
+            <input type="number" id="NS" placeholder="Nota Simulado (SIM)" step="0.1">
+            <input type="number" id="aql1" placeholder="AQL 1" step="0.1">
+            <input type="number" id="aql2" placeholder="AQL 2" step="0.1">
+            <input type="number" id="aql3" placeholder="AQL 3" step="0.1">
+            <input type="number" id="aql4" placeholder="AQL 4" step="0.1">
+            <input type="number" id="PEX" class="full-width" placeholder="PEX" step="0.1">
+        </div>
 
-        <button id="calcular">Calcular Média</button>
-        <button id="zerar">Zerar</button>
+        <div class="buttons-group">
+            <button id="calcular">Calcular Média</button>
+            <button id="zerar">Zerar</button>
+        </div>
 
-        <div class="resultado" id="resultado"></div>
+        <div class="resultado" id="resultado">Insira as notas acima</div>
 
-        <a href="MediaRecuperação copy.html">Cálculo da nota da Recuperação</a>
-        <a href="MediaFinal.html">Calcular Média Final</a>
+        <div class="links-group">
+            <a href="MediaRecuperação copy.html">Cálculo da nota da Recuperação →</a>
+            <a href="MediaFinal.html">Calcular Média Final →</a>
+        </div>
+
+        <footer>developed by <span>Arthur Palmeira</span></footer>
     </div>
 
-    <script>
-        const calcularBtn = document.getElementById('calcular');
-        const zerarBtn = document.getElementById('zerar');
-        const resultadoDiv = document.getElementById('resultado');
+   <script>
+    const calcularBtn = document.getElementById('calcular');
+    const zerarBtn = document.getElementById('zerar');
+    const resultadoDiv = document.getElementById('resultado');
 
-        calcularBtn.addEventListener('click', () => {
-            let NP = Number(document.getElementById('NP').value);
-            let NA = Number(document.getElementById('NA').value);
-            let NC = Number(document.getElementById('NC').value);
-            let NS = Number(document.getElementById('NS').value);
-            let aql1 = Number(document.getElementById('aql1').value);
-            let aql2 = Number(document.getElementById('aql2').value);
-            let aql3 = Number(document.getElementById('aql3').value);
-            let aql4 = Number(document.getElementById('aql4').value);
-            let PEX = Number(document.getElementById('PEX').value);
+    calcularBtn.addEventListener('click', () => {
+        const inputIds = ['NP', 'NA', 'NC', 'NS', 'aql1', 'aql2', 'aql3', 'aql4', 'PEX'];
+        const valores = {};
 
-            if ([NP, NA, NC, NS, aql1, aql2, aql3, aql4, PEX].some(isNaN)) {
+        for (let id of inputIds) {
+            const inputEl = document.getElementById(id);
+            if (!inputEl || inputEl.value.trim() === '' || isNaN(Number(inputEl.value))) {
+                resultadoDiv.style.color = '#f87171';
                 resultadoDiv.textContent = "Preencha todas as notas corretamente!";
                 return;
             }
+            valores[id] = Number(inputEl.value);
+        }
 
-            let MediaQuantitativa = ((NP * 0.6 + NA * 0.4) * 0.5) + (NC * 0.25 + NS * 0.25);
-            let MediaQualitativa = (aql1 + aql2 + aql3 + aql4) / 4;
+        let MediaQuantitativa = ((valores.NP * 0.6 + valores.NA * 0.4) * 0.5) + (valores.NC * 0.25 + valores.NS * 0.25);
+        let MediaQualitativa = (valores.aql1 + valores.aql2 + valores.aql3 + valores.aql4) / 4;
+        let resultado = (MediaQualitativa * 0.3 + (MediaQuantitativa + valores.PEX) * 0.7).toFixed(1);
 
-            let resultado = (MediaQualitativa * 0.3 + (MediaQuantitativa + PEX) * 0.7).toFixed(1);
+        resultadoDiv.style.color = '#38bdf8';
+        resultadoDiv.textContent = `Sua média é: ${resultado}`;
+    });
 
-            resultadoDiv.textContent = `Sua média é: ${resultado}`;
-        });
-
-        zerarBtn.addEventListener('click', () => {
-            document.querySelectorAll('input').forEach(input => input.value = '');
-            resultadoDiv.textContent = '';
-        });
-    </script>
+    zerarBtn.addEventListener('click', () => {
+        document.querySelectorAll('input').forEach(input => input.value = '');
+        resultadoDiv.style.color = 'var(--accent-blue)';
+        resultadoDiv.textContent = 'Insira as notas acima';
+    });
+</script>
 </body>
-
 
 </html>

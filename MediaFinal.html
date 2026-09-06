@@ -4,165 +4,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Média Boletim NSL</title>
+    <title>Média Final NSL</title>
     <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --card-bg: rgba(17, 24, 39, 0.75);
+            --accent-blue: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+
         body {
-            font-family: "Segoe UI", Arial, sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
             padding: 20px;
-            color: #333;
+            position: relative;
+        }
+
+        body::before {
+            content: ''; position: absolute; width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            top: 20%; left: 50%; transform: translate(-50%, -50%); z-index: 0;
+            animation: pulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
         }
 
         .container {
-            background: #ffffff;
-            padding: 30px 40px;
-            border-radius: 15px;
-            max-width: 450px;
-            margin: auto;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            animation: fadeIn 0.6s ease-in-out;
+            position: relative; z-index: 1; background: var(--card-bg);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color); padding: 40px 32px; border-radius: 24px;
+            width: 100%; max-width: 440px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: containerAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes containerAppear {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         h2 {
-            margin-bottom: 20px;
-            color: #1e3c72;
+            font-size: 1.5rem; font-weight: 600; text-align: center; margin-bottom: 4px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
+
+        .obs { text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 24px; }
+
+        .form-flex { display: flex; flex-direction: column; gap: 12px; }
 
         input {
-            width: 100%;
-            margin-bottom: 12px;
-            padding: 10px;
-            font-size: 15px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            transition: border 0.3s, box-shadow 0.3s;
+            width: 100%; padding: 12px 16px; background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-main);
+            font-size: 0.95rem; outline: none; transition: all 0.25s ease;
         }
 
-        input:focus {
-            border-color: #2a5298;
-            outline: none;
-            box-shadow: 0 0 6px rgba(42, 82, 152, 0.6);
-        }
+        input::placeholder { color: var(--text-muted); font-size: 0.85rem; }
+        input:focus { background: rgba(255, 255, 255, 0.06); border-color: var(--accent-blue); box-shadow: 0 0 15px var(--accent-glow); transform: translateY(-1px); }
+
+        .buttons-group { display: flex; gap: 12px; margin-top: 20px; }
 
         button {
-            padding: 12px 18px;
-            font-size: 16px;
-            margin: 8px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            flex: 1; padding: 12px; font-size: 0.95rem; font-weight: 600; border-radius: 12px;
+            border: none; cursor: pointer; transition: all 0.25s ease;
         }
 
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
-        }
+        button#calcular { background: var(--accent-blue); color: #0b0f19; box-shadow: 0 4px 20px var(--accent-glow); }
+        button#calcular:hover { background: #7dd3fc; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(56, 189, 248, 0.4); }
 
-        button#calcular {
-            background: #1e90ff;
-            color: white;
-        }
-
-        button#zerar {
-            background: #f44336;
-            color: white;
-        }
+        button#zerar { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border: 1px solid var(--border-color); }
+        button#zerar:hover { background: rgba(239, 68, 68, 0.15); color: #f87171; border-color: rgba(239, 68, 68, 0.3); transform: translateY(-2px); }
 
         .resultado {
-            margin-top: 20px;
-            font-weight: bold;
-            font-size: 20px;
-            color: #2a5298;
+            margin-top: 24px; padding: 16px; background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px; border: 1px dashed var(--border-color); text-align: center;
+            font-size: 1.05rem; font-weight: 600; color: var(--accent-blue); min-height: 56px;
+            display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;
         }
 
-        #Notaprecissa {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #444;
-        }
+        .links-group { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; text-align: center; }
+        a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s ease; }
+        a:hover { color: var(--accent-blue); }
 
-        a {
-            display: block;
-            margin-top: 12px;
-            text-decoration: none;
-            color: #1e90ff;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        a:hover {
-            color: #163b6c;
-        }
+        footer { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.75rem; color: var(--text-muted); }
+        footer span { color: var(--text-main); font-weight: 600; }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h2>Cálculo da Média Final 1° Ano</h2>
-        <p><b>*pode haver um erro de 0.1 decímos nos cáculos</b></p>
+        <h2>Cálculo da Média Final</h2>
+        <p class="obs">*pode haver variação de 0.1 décimos[cite: 2]</p>
 
-        <input type="number" id="tri1" placeholder="Média 1°" step="0.1">
-        <input type="number" id="tri2" placeholder="Média 2°" step="0.1">
-        <input type="number" id="tri3" placeholder="Média 3°" step="0.1">
+        <div class="form-flex">
+            <input type="number" id="tri1" placeholder="Média 1° Trimestre" step="0.1">
+            <input type="number" id="tri2" placeholder="Média 2° Trimestre" step="0.1">
+            <input type="number" id="tri3" placeholder="Média 3° Trimestre" step="0.1">
+        </div>
 
-        <button id="calcular">Calcular Média</button>
-        <button id="zerar">Zerar</button>
+        <div class="buttons-group">
+            <button id="calcular">Calcular Média</button>
+            <button id="zerar">Zerar</button>
+        </div>
 
-        <div class="resultado" id="resultado"></div>
-        <div class='NP' id='Notaprecissa'></div>
+        <div class="resultado" id="resultado">Insira as notas dos 3 trimestres</div>
 
-        <a href="index.html">calcular média</a>
-        <a href="MediaRecuperação copy.html">Calcular nota recuperação</a>
+        <div class="links-group">
+            <a href="index.html">← Calcular média do trimestre</a>
+            <a href="MediaRecuperação copy.html">Calcular nota da recuperação →</a>
+        </div>
+
+        <footer>developed by <span>Arthur Palmeira</span></footer>
     </div>
 
-    <script>
-        const calcularBtn = document.getElementById('calcular');
-        const zerarBtn = document.getElementById('zerar');
-        const resultadoDiv = document.getElementById('resultado');
-        const NotaFinal22 = document.getElementById('notaprecisa');
+  <script>
+    const calcularBtn = document.getElementById('calcular');
+    const zerarBtn = document.getElementById('zerar');
+    const resultadoDiv = document.getElementById('resultado');
 
-        calcularBtn.addEventListener('click', () => {
-            let nota1 = Number(document.getElementById('tri1').value);
-            let nota2 = Number(document.getElementById('tri2').value);
-            let nota3 = Number(document.getElementById('tri3').value);
+    calcularBtn.addEventListener('click', () => {
+        const inputIds = ['tri1', 'tri2', 'tri3'];
+        const valores = {};
 
-            if ([nota1, nota2, nota3].some(isNaN)) {
+        for (let id of inputIds) {
+            const inputEl = document.getElementById(id);
+            if (!inputEl || inputEl.value.trim() === '' || isNaN(Number(inputEl.value))) {
+                resultadoDiv.style.color = '#f87171';
                 resultadoDiv.textContent = "Preencha todas as notas corretamente!";
                 return;
             }
+            valores[id] = Number(inputEl.value);
+        }
 
-            let resultado = nota1 + nota2 + nota3;
+        let resultado = valores.tri1 + valores.tri2 + valores.tri3;
 
-            if (resultado >= 24) {
-                resultadoDiv.textContent = `Aprovado! Sua média é: ${(resultado / 3).toFixed(1)}`;
-            } else {
-                resultadoDiv.textContent = `Você está na final. Nota necessária para ser aprovado: ${24 - resultado}`;
-            }
-        });
+        resultadoDiv.style.color = '#38bdf8';
+        if (resultado >= 24) {
+            resultadoDiv.textContent = `Aprovado! Sua média é: ${(resultado / 3).toFixed(1)}`;
+        } else {
+            resultadoDiv.textContent = `Em final. Nota necessária: ${(24 - resultado).toFixed(1)}`;
+        }
+    });
 
-        zerarBtn.addEventListener('click', () => {
-            document.querySelectorAll('input').forEach(input => input.value = '');
-            resultadoDiv.textContent = '';
-        });
-    </script>
+    zerarBtn.addEventListener('click', () => {
+        document.querySelectorAll('input').forEach(input => input.value = '');
+        resultadoDiv.style.color = 'var(--accent-blue)';
+        resultadoDiv.textContent = 'Insira as notas dos 3 trimestres';
+    });
+</script>
 </body>
 
-
 </html>
-
-
