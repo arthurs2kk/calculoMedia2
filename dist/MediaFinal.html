@@ -6,6 +6,7 @@
     <meta name="description" content="Calcule sua média final a partir das notas dos três trimestres.">
     <title>Média Final | NSL</title>
     <link rel="stylesheet" href="styles.css">
+    
     <script>
         window.va = window.va || function () {
             (window.vaq = window.vaq || []).push(arguments);
@@ -109,17 +110,16 @@
             }
 
             const soma = valores.tri1 + valores.tri2 + valores.tri3;
-            resultCard.dataset.state = 'success';
+resultCard.dataset.state = 'success';
 
-           if (soma >= 23.4) {
+let media = soma / 3;
+
+if (soma >= 23.4) {
     resultado.textContent = 'Aprovado!';
     resultDetail.textContent = 'Sua média anual foi';
 
-    let media = soma / 3;
-    if (soma >= 23.4 && soma < 24) {
+    if (soma < 24) {
         media = 8;
-    } else {
-        media = soma / 3;
     }
     resultValue.textContent = media.toFixed(1).replace('.', ',');
 } else {
