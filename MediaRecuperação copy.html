@@ -1,163 +1,130 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Média Recuperação NSL</title>
-    <style>
-        :root {
-            --bg-dark: #0b0f19;
-            --card-bg: rgba(17, 24, 39, 0.75);
-            --accent-blue: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.25);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.08);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-
-        body {
-            background-color: var(--bg-dark);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-main);
-            padding: 20px;
-            position: relative;
-        }
-
-        body::before {
-            content: ''; position: absolute; width: 350px; height: 350px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-            top: 20%; left: 50%; transform: translate(-50%, -50%); z-index: 0;
-            animation: pulse 8s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
-            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-        }
-
-        .container {
-            position: relative; z-index: 1; background: var(--card-bg);
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-color); padding: 40px 32px; border-radius: 24px;
-            width: 100%; max-width: 480px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            animation: containerAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes containerAppear {
-            from { opacity: 0; transform: translateY(20px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        h2 {
-            font-size: 1.5rem; font-weight: 600; text-align: center; margin-bottom: 24px;
-            background: linear-gradient(135deg, #ffffff 0%, var(--accent-blue) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .full-width { grid-column: span 2; }
-
-        input {
-            width: 100%; padding: 12px 16px; background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-main);
-            font-size: 0.95rem; outline: none; transition: all 0.25s ease;
-        }
-
-        input::placeholder { color: var(--text-muted); font-size: 0.85rem; }
-        input:focus { background: rgba(255, 255, 255, 0.06); border-color: var(--accent-blue); box-shadow: 0 0 15px var(--accent-glow); transform: translateY(-1px); }
-
-        .buttons-group { display: flex; gap: 12px; margin-top: 20px; }
-
-        button {
-            flex: 1; padding: 12px; font-size: 0.95rem; font-weight: 600; border-radius: 12px;
-            border: none; cursor: pointer; transition: all 0.25s ease;
-        }
-
-        button#calcular { background: var(--accent-blue); color: #0b0f19; box-shadow: 0 4px 20px var(--accent-glow); }
-        button#calcular:hover { background: #7dd3fc; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(56, 189, 248, 0.4); }
-
-        button#zerar { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border: 1px solid var(--border-color); }
-        button#zerar:hover { background: rgba(239, 68, 68, 0.15); color: #f87171; border-color: rgba(239, 68, 68, 0.3); transform: translateY(-2px); }
-
-        .resultado {
-            margin-top: 24px; padding: 16px; background: rgba(255, 255, 255, 0.02);
-            border-radius: 12px; border: 1px dashed var(--border-color); text-align: center;
-            font-size: 1.05rem; font-weight: 600; color: var(--accent-blue); min-height: 56px;
-            display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;
-        }
-
-        .links-group { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; text-align: center; }
-        a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s ease; }
-        a:hover { color: var(--accent-blue); }
-
-        footer { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.75rem; color: var(--text-muted); }
-        footer span { color: var(--text-main); font-weight: 600; }
-    </style>
+    <meta name="description" content="Calcule a média de recuperação do primeiro ano.">
+    <title>Média de Recuperação | NSL</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <div class="container">
-        <h2>Média Recuperação 1° Ano</h2>
+    <main class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="Página inicial da Calculadora NSL">
+                <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 17V10M12 17V6M19 17v-4M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+                Calculadora NSL
+            </a>
+            <nav class="nav-tabs" aria-label="Tipos de cálculo">
+                <a href="index.html">Trimestre</a>
+                <a href="MediaRecuperação copy.html" aria-current="page">Recuperação</a>
+                <a href="MediaFinal.html">Média final</a>
+            </nav>
+        </header>
 
-        <div class="form-grid">
-            <input type="number" id="NR" class="full-width" placeholder="Nota Recuperação" step="0.1">
-            <input type="number" id="aql1" placeholder="AQL 1" step="0.1">
-            <input type="number" id="aql2" placeholder="AQL 2" step="0.1">
-            <input type="number" id="aql3" placeholder="AQL 3" step="0.1">
-            <input type="number" id="aql4" placeholder="AQL 4" step="0.1">
-        </div>
+        <section class="calculator-layout" aria-labelledby="page-title">
+            <aside class="intro-panel">
+                <div class="intro-copy">
+                    <p class="eyebrow">Recuperação</p>
+                   
+                    <p class="intro-text">Combine a nota da recuperação com as atividades qualitativas do período.</p>
+                </div>
+                <div class="formula-card" aria-label="Composição da média de recuperação">
+                    <div class="formula-item"><strong>70%</strong><span>Nota da recuperação</span></div>
+                    <div class="formula-item"><strong>30%</strong><span>Média das AQLs</span></div>
+                </div>
+            </aside>
 
-        <div class="buttons-group">
-            <button id="calcular">Calcular Média</button>
-            <button id="zerar">Zerar</button>
-        </div>
+            <article class="calculator-card">
+                <div class="card-heading">
+                    <div>
+                        <h2>Calcule a recuperação</h2>
+                        <p>Preencha a prova e as quatro atividades.</p>
+                    </div>
+                    <span class="step-badge">1º ano</span>
+                </div>
 
-        <div class="resultado" id="resultado">Insira as notas acima</div>
+                <form id="calculator-form" novalidate>
+                    <fieldset>
+                        <legend>Nota principal</legend>
+                        <div class="form-grid single">
+                            <div class="field"><label for="NR">Nota da recuperação</label><input type="number" id="NR" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
+                        </div>
+                    </fieldset>
 
-        <div class="links-group">
-            <a href="index.html">← Calcular média parcial</a>
-            <a href="MediaFinal.html">Calcular Média Final →</a>
-        </div>
+                    <fieldset>
+                        <legend>Atividades qualitativas</legend>
+                        <div class="form-grid">
+                            <div class="field"><label for="aql1">AQL 1</label><input type="number" id="aql1" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
+                            <div class="field"><label for="aql2">AQL 2</label><input type="number" id="aql2" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
+                            <div class="field"><label for="aql3">AQL 3</label><input type="number" id="aql3" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
+                            <div class="field"><label for="aql4">AQL 4</label><input type="number" id="aql4" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
+                        </div>
+                    </fieldset>
 
-        <footer>developed by <span>Arthur Palmeira</span></footer>
-    </div>
+                    <div class="actions">
+                        <button class="button button-primary" type="submit">Calcular média</button>
+                        <button class="button button-secondary" type="reset">Limpar</button>
+                    </div>
+                </form>
 
-    <<script>
-    const calcularBtn = document.getElementById('calcular');
-    const zerarBtn = document.getElementById('zerar');
-    const resultadoDiv = document.getElementById('resultado');
+                <div class="result-card" id="result-card" data-state="idle" aria-live="polite">
+                    <span class="result-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M8 9h8M8 13h5M9 3h6l4 4v14H5V3h4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                    <div class="result-copy">
+                        <span>Resultado</span>
+                        <strong id="resultado">Aguardando suas notas</strong>
+                        <small id="result-detail">Preencha todos os campos para calcular.</small>
+                    </div>
+                    <strong class="result-value" id="result-value" aria-hidden="true">—</strong>
+                </div>
+            </article>
+        </section>
 
-    calcularBtn.addEventListener('click', () => {
+        <footer class="page-footer">
+            <span>Developed by<strong>Arthur Palmeira</strong></span>
+            <span class="keyboard-hint"><kbd>Enter</kbd> para calcular</span>
+        </footer>
+    </main>
+
+    <script>
+        const form = document.getElementById('calculator-form');
+        const resultCard = document.getElementById('result-card');
+        const resultado = document.getElementById('resultado');
+        const resultDetail = document.getElementById('result-detail');
+        const resultValue = document.getElementById('result-value');
         const inputIds = ['NR', 'aql1', 'aql2', 'aql3', 'aql4'];
-        const valores = {};
 
-        for (let id of inputIds) {
-            const inputEl = document.getElementById(id);
-            if (!inputEl || inputEl.value.trim() === '' || isNaN(Number(inputEl.value))) {
-                resultadoDiv.style.color = '#f87171';
-                resultadoDiv.textContent = "Preencha todas as notas corretamente!";
-                return;
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const valores = {};
+
+            for (const id of inputIds) {
+                const input = document.getElementById(id);
+                if (input.value.trim() === '' || !Number.isFinite(Number(input.value))) {
+                    resultCard.dataset.state = 'error';
+                    resultado.textContent = 'Falta preencher uma nota';
+                    resultDetail.textContent = 'Confira os campos e tente novamente.';
+                    resultValue.textContent = '!';
+                    input.focus();
+                    return;
+                }
+                valores[id] = Number(input.value);
             }
-            valores[id] = Number(inputEl.value);
-        }
 
-        let resultado = valores.NR * 0.7 + ((valores.aql1 + valores.aql2 + valores.aql3 + valores.aql4) / 4) * 0.3;
-        resultadoDiv.style.color = '#38bdf8';
-        resultadoDiv.textContent = `Sua média é: ${resultado.toFixed(1)}`;
-    });
+            const mediaAql = (valores.aql1 + valores.aql2 + valores.aql3 + valores.aql4) / 4;
+            const media = valores.NR * 0.7 + mediaAql * 0.3;
 
-    zerarBtn.addEventListener('click', () => {
-        document.querySelectorAll('input').forEach(input => input.value = '');
-        resultadoDiv.style.color = 'var(--accent-blue)';
-        resultadoDiv.textContent = 'Insira as notas acima';
-    });
-</script>
+            resultCard.dataset.state = 'success';
+            resultado.textContent = 'Sua média de recuperação';
+            resultDetail.textContent = 'Cálculo concluído com sucesso.';
+            resultValue.textContent = media.toFixed(1).replace('.', ',');
+        });
+
+        form.addEventListener('reset', () => {
+            resultCard.dataset.state = 'idle';
+            resultado.textContent = 'Aguardando suas notas';
+            resultDetail.textContent = 'Preencha todos os campos para calcular.';
+            resultValue.textContent = '—';
+        });
+    </script>
 </body>
-
 </html>

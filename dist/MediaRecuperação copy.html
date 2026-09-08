@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Calcule sua média final a partir das notas dos três trimestres.">
-    <title>Média Final | NSL</title>
+    <meta name="description" content="Calcule a média de recuperação do primeiro ano.">
+    <title>Média de Recuperação | NSL</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,45 +16,53 @@
             </a>
             <nav class="nav-tabs" aria-label="Tipos de cálculo">
                 <a href="index.html">Trimestre</a>
-                <a href="MediaRecuperação copy.html">Recuperação</a>
-                <a href="MediaFinal.html" aria-current="page">Média final</a>
+                <a href="MediaRecuperação copy.html" aria-current="page">Recuperação</a>
+                <a href="MediaFinal.html">Média final</a>
             </nav>
         </header>
 
         <section class="calculator-layout" aria-labelledby="page-title">
             <aside class="intro-panel">
                 <div class="intro-copy">
-                    <p class="eyebrow">Resultado do ano</p>
-
-                    <p class="intro-text">Some os três trimestres para conferir sua média ou a nota necessária na avaliação final.</p>
+                    <p class="eyebrow">Recuperação</p>
+                   
+                    <p class="intro-text">Combine a nota da recuperação com as atividades qualitativas do período.</p>
                 </div>
-                <div class="formula-card" aria-label="Critério da média final">
-                    <div class="formula-item"><strong>3</strong><span>Trimestres</span></div>
-                    <div class="formula-item"><strong>24 pts</strong><span>Para aprovação</span></div>
+                <div class="formula-card" aria-label="Composição da média de recuperação">
+                    <div class="formula-item"><strong>70%</strong><span>Nota da recuperação</span></div>
+                    <div class="formula-item"><strong>30%</strong><span>Média das AQLs</span></div>
                 </div>
             </aside>
 
             <article class="calculator-card">
                 <div class="card-heading">
                     <div>
-                        <h2>Calcule a média final</h2>
-                        <p>Informe a média obtida em cada trimestre.</p>
+                        <h2>Calcule a recuperação</h2>
+                        <p>Preencha a prova e as quatro atividades.</p>
                     </div>
-                    <span class="step-badge">Ano letivo</span>
+                    <span class="step-badge">1º ano</span>
                 </div>
 
                 <form id="calculator-form" novalidate>
                     <fieldset>
-                        <legend>Médias trimestrais</legend>
+                        <legend>Nota principal</legend>
                         <div class="form-grid single">
-                            <div class="field"><label for="tri1">1º trimestre</label><input type="number" id="tri1" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
-                            <div class="field"><label for="tri2">2º trimestre</label><input type="number" id="tri2" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
-                            <div class="field"><label for="tri3">3º trimestre</label><input type="number" id="tri3" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
+                            <div class="field"><label for="NR">Nota da recuperação</label><input type="number" id="NR" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Atividades qualitativas</legend>
+                        <div class="form-grid">
+                            <div class="field"><label for="aql1">AQL 1</label><input type="number" id="aql1" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
+                            <div class="field"><label for="aql2">AQL 2</label><input type="number" id="aql2" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
+                            <div class="field"><label for="aql3">AQL 3</label><input type="number" id="aql3" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
+                            <div class="field"><label for="aql4">AQL 4</label><input type="number" id="aql4" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
                         </div>
                     </fieldset>
 
                     <div class="actions">
-                        <button class="button button-primary" type="submit">Calcular resultado</button>
+                        <button class="button button-primary" type="submit">Calcular média</button>
                         <button class="button button-secondary" type="reset">Limpar</button>
                     </div>
                 </form>
@@ -63,8 +71,8 @@
                     <span class="result-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M8 9h8M8 13h5M9 3h6l4 4v14H5V3h4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                     <div class="result-copy">
                         <span>Resultado</span>
-                        <strong id="resultado">Aguardando suas médias</strong>
-                        <small id="result-detail">Preencha os três trimestres para calcular.</small>
+                        <strong id="resultado">Aguardando suas notas</strong>
+                        <small id="result-detail">Preencha todos os campos para calcular.</small>
                     </div>
                     <strong class="result-value" id="result-value" aria-hidden="true">—</strong>
                 </div>
@@ -83,7 +91,7 @@
         const resultado = document.getElementById('resultado');
         const resultDetail = document.getElementById('result-detail');
         const resultValue = document.getElementById('result-value');
-        const inputIds = ['tri1', 'tri2', 'tri3'];
+        const inputIds = ['NR', 'aql1', 'aql2', 'aql3', 'aql4'];
 
         form.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -93,8 +101,8 @@
                 const input = document.getElementById(id);
                 if (input.value.trim() === '' || !Number.isFinite(Number(input.value))) {
                     resultCard.dataset.state = 'error';
-                    resultado.textContent = 'Falta preencher uma média';
-                    resultDetail.textContent = 'Confira os três trimestres e tente novamente.';
+                    resultado.textContent = 'Falta preencher uma nota';
+                    resultDetail.textContent = 'Confira os campos e tente novamente.';
                     resultValue.textContent = '!';
                     input.focus();
                     return;
@@ -102,24 +110,19 @@
                 valores[id] = Number(input.value);
             }
 
-            const soma = valores.tri1 + valores.tri2 + valores.tri3;
-            resultCard.dataset.state = 'success';
+            const mediaAql = (valores.aql1 + valores.aql2 + valores.aql3 + valores.aql4) / 4;
+            const media = valores.NR * 0.7 + mediaAql * 0.3;
 
-            if (soma >= 24) {
-                resultado.textContent = 'Aprovado!';
-                resultDetail.textContent = 'Sua média anual foi';
-                resultValue.textContent = (soma / 3).toFixed(1).replace('.', ',');
-            } else {
-                resultado.textContent = 'Avaliação final necessária';
-                resultDetail.textContent = 'Nota que você precisa alcançar';
-                resultValue.textContent = (24 - soma).toFixed(1).replace('.', ',');
-            }
+            resultCard.dataset.state = 'success';
+            resultado.textContent = 'Sua média de recuperação';
+            resultDetail.textContent = 'Cálculo concluído com sucesso.';
+            resultValue.textContent = media.toFixed(1).replace('.', ',');
         });
 
         form.addEventListener('reset', () => {
             resultCard.dataset.state = 'idle';
-            resultado.textContent = 'Aguardando suas médias';
-            resultDetail.textContent = 'Preencha os três trimestres para calcular.';
+            resultado.textContent = 'Aguardando suas notas';
+            resultDetail.textContent = 'Preencha todos os campos para calcular.';
             resultValue.textContent = '—';
         });
     </script>
