@@ -6,6 +6,13 @@
     <meta name="description" content="Calcule sua média final a partir das notas dos três trimestres.">
     <title>Média Final | NSL</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <script>
+        window.va = window.va || function () {
+            (window.vaq = window.vaq || []).push(arguments);
+        };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
     <main class="app-shell">
@@ -103,17 +110,23 @@
             }
 
             const soma = valores.tri1 + valores.tri2 + valores.tri3;
-            resultCard.dataset.state = 'success';
+resultCard.dataset.state = 'success';
 
-            if (soma >= 23.4) {
-                resultado.textContent = 'Aprovado!';
-                resultDetail.textContent = 'Sua média anual foi';
-                resultValue.textContent = (soma / 3).toFixed(1).replace('.', ',');
-            } else {
-                resultado.textContent = 'Avaliação final necessária';
-                resultDetail.textContent = 'Nota que você precisa alcançar';
-                resultValue.textContent = (24 - soma).toFixed(1).replace('.', ',');
-            }
+let media = soma / 3;
+
+if (soma >= 23.4) {
+    resultado.textContent = 'Aprovado!';
+    resultDetail.textContent = 'Sua média anual foi';
+
+    if (soma < 24) {
+        media = 8;
+    }
+    resultValue.textContent = media.toFixed(1).replace('.', ',');
+} else {
+    resultado.textContent = 'Avaliação final necessária';
+    resultDetail.textContent = 'Nota que você precisa alcançar';
+    resultValue.textContent = (12 - media).toFixed(1).replace('.', ',');
+}
         });
 
         form.addEventListener('reset', () => {
