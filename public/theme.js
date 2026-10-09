@@ -1,7 +1,6 @@
 (() => {
     const storageKey = 'nsl-theme';
     const root = document.documentElement;
-    const systemPreference = window.matchMedia('(prefers-color-scheme: dark)');
     let savedTheme = null;
 
     try {
@@ -12,7 +11,7 @@
 
     let currentTheme = savedTheme === 'dark' || savedTheme === 'light'
         ? savedTheme
-        : systemPreference.matches ? 'dark' : 'light';
+        : 'dark';
 
     const updateButtons = () => {
         const isDark = currentTheme === 'dark';
@@ -60,13 +59,4 @@
         });
     });
 
-    const followSystemTheme = (event) => {
-        if (savedTheme !== 'dark' && savedTheme !== 'light') {
-            applyTheme(event.matches ? 'dark' : 'light');
-        }
-    };
-
-    if (typeof systemPreference.addEventListener === 'function') {
-        systemPreference.addEventListener('change', followSystemTheme);
-    }
 })();
