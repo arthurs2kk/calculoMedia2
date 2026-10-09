@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Calcule sua média final a partir das notas dos três trimestres.">
+    <meta name="theme-color" content="#0b3d6e">
     <title>Média Final | NSL</title>
+    <link rel="icon" type="image/png" href="logo_lourdinasTransparente.png">
     <link rel="stylesheet" href="styles.css">
     
     <script>
@@ -24,11 +26,12 @@
 </script>
 </head>
 
+<body>
     <main class="app-shell">
         <header class="topbar">
             <a class="brand" href="index.html" aria-label="Página inicial da Calculadora NSL">
-                <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 17V10M12 17V6M19 17v-4M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
-                Calculadora NSL
+                <span class="brand-mark" aria-hidden="true"><img src="logo_lourdinasTransparente.png" alt=""></span>
+                <span class="brand-copy"><strong>NSL</strong><small>Calculadora de médias</small></span>
             </a>
             <nav class="nav-tabs" aria-label="Tipos de cálculo">
                 <a href="index.html">Trimestre</a>
@@ -53,7 +56,7 @@
             <article class="calculator-card">
                 <div class="card-heading">
                     <div>
-                        <h2>Calcule a média final</h2>
+                        <h2 id="page-title">Calcule a média final</h2>
                         <p>Informe a média obtida em cada trimestre.</p>
                     </div>
                     <span class="step-badge">Ano letivo</span>
@@ -63,9 +66,9 @@
                     <fieldset>
                         <legend>Médias trimestrais</legend>
                         <div class="form-grid single">
-                            <div class="field"><label for="tri1">1º trimestre</label><input type="number" id="tri1" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
-                            <div class="field"><label for="tri2">2º trimestre</label><input type="number" id="tri2" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
-                            <div class="field"><label for="tri3">3º trimestre</label><input type="number" id="tri3" placeholder="0,0" step="0.1" inputmode="decimal" required></div>
+                            <div class="field"><label for="tri1">1º trimestre</label><input type="text" id="tri1" placeholder="0,0" inputmode="decimal" autocomplete="off" required></div>
+                            <div class="field"><label for="tri2">2º trimestre</label><input type="text" id="tri2" placeholder="0,0" inputmode="decimal" autocomplete="off" required></div>
+                            <div class="field"><label for="tri3">3º trimestre</label><input type="text" id="tri3" placeholder="0,0" inputmode="decimal" autocomplete="off" required></div>
                         </div>
                     </fieldset>
 
@@ -107,7 +110,8 @@
 
             for (const id of inputIds) {
                 const input = document.getElementById(id);
-                if (input.value.trim() === '' || !Number.isFinite(Number(input.value))) {
+                const valor = input.value.trim().replace(',', '.');
+                if (valor === '' || !Number.isFinite(Number(valor))) {
                     resultCard.dataset.state = 'error';
                     resultado.textContent = 'Falta preencher uma média';
                     resultDetail.textContent = 'Confira os três trimestres e tente novamente.';
@@ -115,7 +119,7 @@
                     input.focus();
                     return;
                 }
-                valores[id] = Number(input.value);
+                valores[id] = Number(valor);
             }
 
             const soma = valores.tri1 + valores.tri2 + valores.tri3;
