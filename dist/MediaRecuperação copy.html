@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calcule a média de recuperação do primeiro ano.">
+    <meta name="theme-color" content="#0b3d6e">
+    <title>Média de Recuperação | NSL</title>
+    <link rel="icon" type="image/png" href="logo_lourdinasTransparente.png">
+    <script src="theme.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    
+    <script>
+        window.va = window.va || function () {
+            (window.vaq = window.vaq || []).push(arguments);
+        };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K1XCS374H7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-K1XCS374H7');
+</script>
+</head>
+
+<body>
+    <main class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="Página inicial da Calculadora NSL">
+                <span class="brand-mark" aria-hidden="true"><img src="logo_lourdinasTransparente.png" alt=""></span>
+                <span class="brand-copy"><strong>NSL</strong><small>Calculadora de médias</small></span>
+            </a>
+            <nav class="nav-tabs" aria-label="Tipos de cálculo">
+                <a href="index.html">Trimestre</a>
+                <a href="MediaRecuperação copy.html" aria-current="page">Recuperação</a>
+                <a href="MediaFinal.html">Média final</a>
+            </nav>
+            <button class="theme-toggle" type="button" aria-label="Ativar modo escuro" aria-pressed="false">
+                <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4a8.5 8.5 0 1 0 11.2 11.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <span class="theme-label">Modo escuro</span>
+            </button>
+        </header>
+
+        <section class="calculator-layout" aria-labelledby="page-title">
+            <aside class="intro-panel">
+                <div class="intro-copy">
+                    <p class="eyebrow">Recuperação</p>
+                   
+                    <p class="intro-text">Combine a nota da recuperação com as atividades qualitativas do período.</p>
+                </div>
+                <div class="formula-card" aria-label="Composição da média de recuperação">
+                    <div class="formula-item"><strong>70%</strong><span>Nota da recuperação</span></div>
+                    <div class="formula-item"><strong>30%</strong><span>Média das AQLs</span></div>
+                </div>
+            </aside>
+
+            <article class="calculator-card">
+                <div class="card-heading">
+                    <div>
+                        <h2 id="page-title">Calcule a recuperação</h2>
+                        <p>Preencha a prova e as quatro atividades.</p>
+                    </div>
+                    <span class="step-badge">1° e 2° ano</span>
+                </div>
+
+                <form id="calculator-form" novalidate>
+                    <fieldset>
+                        <legend>Nota principal</legend>
+                        <div class="form-grid single">
+                            <div class="field"><label for="NR">Nota da recuperação</label><input type="text" id="NR" placeholder="0,0" inputmode="decimal" autocomplete="off" required></div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Atividades qualitativas</legend>
+                        <div class="form-grid">
+                            <div class="field"><label for="aql1">AQL 1</label><input type="text" id="aql1" placeholder="0,0" inputmode="decimal" autocomplete="off" required></div>
+                            <div class="field"><label for="aql2">AQL 2</label><input type="text" id="aql2" placeholder="0,0" inputmode="decimal" autocomplete="off" required></div>
+                            <div class="field"><label for="aql3">AQL 3</label><input type="text" id="aql3" placeholder="0,0" inputmode="decimal" autocomplete="off" required></div>
+                            <div class="field"><label for="aql4">AQL 4</label><input type="text" id="aql4" placeholder="0,0" inputmode="decimal" autocomplete="off" required></div>
+                        </div>
+                    </fieldset>
+
+                    <div class="actions">
+                        <button class="button button-primary" type="submit">Calcular média</button>
+                        <button class="button button-secondary" type="reset">Limpar</button>
+                    </div>
+                </form>
+
+                <div class="result-card" id="result-card" data-state="idle" aria-live="polite">
+                    <span class="result-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M8 9h8M8 13h5M9 3h6l4 4v14H5V3h4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                    <div class="result-copy">
+                        <span>Resultado</span>
+                        <strong id="resultado">Aguardando suas notas</strong>
+                        <small id="result-detail">Preencha todos os campos para calcular.</small>
+                    </div>
+                    <strong class="result-value" id="result-value" aria-hidden="true">—</strong>
+                </div>
+            </article>
+        </section>
+
+        <footer class="page-footer">
+            <span>Developed by <strong>Arthur Palmeira</strong></span>
+            <span class="keyboard-hint"><kbd>Enter</kbd> para calcular</span>
+        </footer>
+    </main>
+
+    <script>
+        const form = document.getElementById('calculator-form');
+        const resultCard = document.getElementById('result-card');
+        const resultado = document.getElementById('resultado');
+        const resultDetail = document.getElementById('result-detail');
+        const resultValue = document.getElementById('result-value');
+        const inputIds = ['NR', 'aql1', 'aql2', 'aql3', 'aql4'];
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const valores = {};
+
+            for (const id of inputIds) {
+                const input = document.getElementById(id);
+                const valor = input.value.trim().replace(',', '.');
+                if (valor === '' || !Number.isFinite(Number(valor))) {
+                    resultCard.dataset.state = 'error';
+                    resultado.textContent = 'Falta preencher uma nota';
+                    resultDetail.textContent = 'Confira os campos e tente novamente.';
+                    resultValue.textContent = '!';
+                    input.focus();
+                    return;
+                }
+                valores[id] = Number(valor);
+            }
+
+            const mediaAql = (valores.aql1 + valores.aql2 + valores.aql3 + valores.aql4) / 4;
+            const media = valores.NR * 0.7 + mediaAql * 0.3;
+
+            resultCard.dataset.state = 'success';
+            resultado.textContent = 'Sua média de recuperação';
+            resultDetail.textContent = 'Cálculo concluído com sucesso.';
+            resultValue.textContent = media.toFixed(1).replace('.', ',');
+        });
+
+        form.addEventListener('reset', () => {
+            resultCard.dataset.state = 'idle';
+            resultado.textContent = 'Aguardando suas notas';
+            resultDetail.textContent = 'Preencha todos os campos para calcular.';
+            resultValue.textContent = '—';
+        });
+    </script>
+</body>
+</html>
